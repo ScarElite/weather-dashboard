@@ -1,0 +1,74 @@
+* {
+    box-sizing: border-box;
+}
+
+
+header {
+    margin-bottom: 10px;
+}
+
+.header {
+    color: white;
+    background-color: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9, 9, 121, 1) 15%, rgba(5, 109, 187, 1) 85%, rgba(0, 212, 255, 1) 100%);
+    text-align: center;
+}
+
+.left-column {
+    width: 20%;
+}
+
+.card {
+    margin-left: 20px;
+    border: none;
+}
+
+.card-header {
+    background-color: white;
+    border: none;
+    font-size: 32px;
+    padding-bottom: 0;
+}
+
+.card-body {
+    padding: 8px;
+    margin: 5px 0px;
+}
+
+.search-form {
+    margin-left: 20px;
+}
+
+.form-input {
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.user-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.submit {
+    background: rgb(0,25,36);
+background: linear-gradient(90deg, rgba(0,25,36,1) 0%, rgba(20,147,241,1) 0%, rgba(5,109,187,1) 100%, rgba(0,212,255,1) 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px 0 5px 0;
+}
+
+.submit:hover {
+    background: rgb(68, 178, 222);
+    color: white;
+}
+
+hr {
+    border-top: solid 2px black;
+    opacity: 100%;
+    width: 90%;
+    position: relative;
+    left: 8%;
+    margin-top: 2px;
+}
