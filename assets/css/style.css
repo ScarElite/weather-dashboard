@@ -15,7 +15,9 @@ header {
 }
 
 .left-column {
-    width: 20%;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
 }
 
 .card {
@@ -67,8 +69,29 @@ background: linear-gradient(90deg, rgba(0,25,36,1) 0%, rgba(20,147,241,1) 0%, rg
 hr {
     border-top: solid 2px black;
     opacity: 100%;
-    width: 90%;
     position: relative;
-    left: 8%;
+    left: 3%;
+    width: 100%;
     margin-top: 2px;
+}
+
+.city-search {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 3%;
+    width: 95%;
+    align-items: center;
+    margin: 10px;
+    padding: 5px;
+    background-color: lightgray;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.city-search:hover {
+    font-size: x-large;
+    box-shadow: 2px 2px rgb(0, 0, 0);
+    text-shadow: 2px 2px lightgray;
+    background-color: white;
 }
