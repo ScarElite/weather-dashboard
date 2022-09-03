@@ -14,10 +14,18 @@ header {
     text-align: center;
 }
 
+main {
+    display: flex;
+}
+
+section {
+    border: 2px solid black;
+}
+
 .left-column {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 30%;
 }
 
 .card {
@@ -94,4 +102,23 @@ hr {
     box-shadow: 2px 2px rgb(0, 0, 0);
     text-shadow: 2px 2px lightgray;
     background-color: white;
+}
+
+/* right column */
+
+.right-column {
+    margin: 10px 0px 30px 20px;
+    width: 65%;
+}
+
+.city-container {
+    padding: 10px;
+}
+
+.city-container h1 {
+    font-size: 32px;
+}
+
+.hidden {
+    visibility: hidden;
 }
