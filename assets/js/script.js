@@ -4,246 +4,8 @@ var cityHistoryEl = document.querySelector(".city-search-history");
 var cityWeatherEl = document.querySelector(".city-weather");
 var cityForecastEl = document.querySelector(".city-forecast");
 const apiKey = "2ce974ae126aef3e2b73d8d71731bb9d";
+const apiKey_UV = "642f411ae74d41aab68e27e199707737";
 var cityContainerEl = document.querySelector(".city-container");
-
-const states = [
-    {
-      name: "Alabama",
-      abbreviation: "AL"
-    },
-    {
-      name: "Alaska",
-      abbreviation: "AK"
-    },
-    {
-      name: "American Samoa",
-      abbreviation: "AS"
-    },
-    {
-      name: "Arizona",
-      abbreviation: "AZ"
-    },
-    {
-      name: "Arkansas",
-      abbreviation: "AR"
-    },
-    {
-      name: "California",
-      abbreviation: "CA"
-    },
-    {
-      name: "Colorado",
-      abbreviation: "CO"
-    },
-    {
-      name: "Connecticut",
-      abbreviation: "CT"
-    },
-    {
-      name: "Delaware",
-      abbreviation: "DE"
-    },
-    {
-      name: "District Of Columbia",
-      abbreviation: "DC"
-    },
-    {
-      name: "Federated States Of Micronesia",
-      abbreviation: "FM"
-    },
-    {
-      name: "Florida",
-      abbreviation: "FL"
-    },
-    {
-      name: "Georgia",
-      abbreviation: "GA"
-    },
-    {
-      name: "Guam",
-      abbreviation: "GU"
-    },
-    {
-      name: "Hawaii",
-      abbreviation: "HI"
-    },
-    {
-      name: "Idaho",
-      abbreviation: "ID"
-    },
-    {
-      name: "Illinois",
-      abbreviation: "IL"
-    },
-    {
-      name: "Indiana",
-      abbreviation: "IN"
-    },
-    {
-      name: "Iowa",
-      abbreviation: "IA"
-    },
-    {
-      name: "Kansas",
-      abbreviation: "KS"
-    },
-    {
-      name: "Kentucky",
-      abbreviation: "KY"
-    },
-    {
-      name: "Louisiana",
-      abbreviation: "LA"
-    },
-    {
-      name: "Maine",
-      abbreviation: "ME"
-    },
-    {
-      name: "Marshall Islands",
-      abbreviation: "MH"
-    },
-    {
-      name: "Maryland",
-      abbreviation: "MD"
-    },
-    {
-      name: "Massachusetts",
-      abbreviation: "MA"
-    },
-    {
-      name: "Michigan",
-      abbreviation: "MI"
-    },
-    {
-      name: "Minnesota",
-      abbreviation: "MN"
-    },
-    {
-      name: "Mississippi",
-      abbreviation: "MS"
-    },
-    {
-      name: "Missouri",
-      abbreviation: "MO"
-    },
-    {
-      name: "Montana",
-      abbreviation: "MT"
-    },
-    {
-      name: "Nebraska",
-      abbreviation: "NE"
-    },
-    {
-      name: "Nevada",
-      abbreviation: "NV"
-    },
-    {
-      name: "New Hampshire",
-      abbreviation: "NH"
-    },
-    {
-      name: "New Jersey",
-      abbreviation: "NJ"
-    },
-    {
-      name: "New Mexico",
-      abbreviation: "NM"
-    },
-    {
-      name: "New York",
-      abbreviation: "NY"
-    },
-    {
-      name: "North Carolina",
-      abbreviation: "NC"
-    },
-    {
-      name: "North Dakota",
-      abbreviation: "ND"
-    },
-    {
-      name: "Northern Mariana Islands",
-      abbreviation: "MP"
-    },
-    {
-      name: "Ohio",
-      abbreviation: "OH"
-    },
-    {
-      name: "Oklahoma",
-      abbreviation: "OK"
-    },
-    {
-      name: "Oregon",
-      abbreviation: "OR"
-    },
-    {
-      name: "Palau",
-      abbreviation: "PW"
-    },
-    {
-      name: "Pennsylvania",
-      abbreviation: "PA"
-    },
-    {
-      name: "Puerto Rico",
-      abbreviation: "PR"
-    },
-    {
-      name: "Rhode Island",
-      abbreviation: "RI"
-    },
-    {
-      name: "South Carolina",
-      abbreviation: "SC"
-    },
-    {
-      name: "South Dakota",
-      abbreviation: "SD"
-    },
-    {
-      name: "Tennessee",
-      abbreviation: "TN"
-    },
-    {
-      name: "Texas",
-      abbreviation: "TX"
-    },
-    {
-      name: "Utah",
-      abbreviation: "UT"
-    },
-    {
-      name: "Vermont",
-      abbreviation: "VT"
-    },
-    {
-      name: "Virgin Islands",
-      abbreviation: "VI"
-    },
-    {
-      name: "Virginia",
-      abbreviation: "VA"
-    },
-    {
-      name: "Washington",
-      abbreviation: "WA"
-    },
-    {
-      name: "West Virginia",
-      abbreviation: "WV"
-    },
-    {
-      name: "Wisconsin",
-      abbreviation: "WI"
-    },
-    {
-      name: "Wyoming",
-      abbreviation: "WY"
-    }
-  ]
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
@@ -326,24 +88,23 @@ var displayCityWeather = function (data, coordsData) {
     var currentHumidity = document.querySelector(".humidity");
     currentHumidity.textContent = "Humidity: " + data.main.humidity + "%";
 
-    var apiUrl = "https://data.epa.gov/efservice/getEnvirofactsUVHOURLY/CITY/" + data.name + "/STATE/" + coordsData + "/JSON"
+    var apiUrl = "https://api.weatherbit.io/v2.0/current?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&key=" + apiKey_UV;
 
     fetch(apiUrl)
     .then(function (response) {
         if (response.ok) {
-            response.json().then(function (data) {
-                console.log(data);
+            response.json().then(function (data_UV) {
+                console.log(data_UV);
+                var currentUV_Index = document.querySelector(".uv-index");
+                currentUV_Index.textContent = "UV Index: " + data_UV.data[0].uv;
             });
         } else {
             alert("Error: Data Not Found");
         }
     })
     .catch(function (error) {
-        alert("Unable to connect to the EPA api");
+        alert("Unable to connect to the Weatherbit api");
     });
-
-    var currentUV_Index = document.querySelector(".uv-index");
-    currentUV_Index.textContent = "UV Index: " + data;
-}
+};
 
 formInput.addEventListener("submit", formSubmitHandler);
