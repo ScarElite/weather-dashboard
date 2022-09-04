@@ -37,16 +37,68 @@
                     <h1 class="city-date"></h1>
                     <h3 class="temp"></h3>
                     <h3 class="wind"></h3>
-                    <h3 class="humidity"></h3>
-                    <h3 class="uv-index"></h3>
+                    <h3 id="humidity" class="humidity"></h3>
+                    <div class="d-flex">
+                        <h3 class="uv-index"></h3>
+                        <h3 class="uv-index-value"></h3>
+                    </div>
                 </section>
             </div>
-            <div class="city-forecast"></div>
+            <div class="city-forecast d-flex">
+                <section id="forecast-title" class="forecast-title hidden">
+                    <h2>5-Day Forecast:</h2>
+                </section>
+                <section class="forecast-container hidden">
+                <!-- <div class="card day-1">
+                    <h3 class="forecast-day card-header">Hello</h3>
+                    <span></span>
+                    <h4 class="forecast-temp"></h4>
+                    <h4 class="forecast-wind"></h4>
+                    <h4 class="forecast-humidity"></h4>
+                </div>
+                <div class="card day-2">
+                    <h3 class="forecast-day card-header"></h3>
+                    <div class="card-body">
+                        <span></span>
+                        <h4 class="forecast-temp"></h4>
+                        <h4 class="forecast-wind"></h4>
+                        <h4 class="forecast-humidity"></h4>
+                    </div>
+                </div>
+                <div class="card day-3">
+                    <h3 class="forecast-day card-header"></h3>
+                    <div class="card-body">
+                        <span></span>
+                        <h4 class="forecast-temp"></h4>
+                        <h4 class="forecast-wind"></h4>
+                        <h4 class="forecast-humidity"></h4>
+                    </div>
+                </div>
+                <div class="card day-4">
+                    <h3 class="forecast-day card-header"></h3>
+                    <div class="card-body">
+                        <span></span>
+                        <h4 class="forecast-temp"></h4>
+                        <h4 class="forecast-wind"></h4>
+                        <h4 class="forecast-humidity"></h4>
+                    </div>
+                </div>
+                <div class="card day-5">
+                    <h3 class="forecast-day card-header"></h3>
+                    <div class="card-body">
+                        <span></span>
+                        <h4 class="forecast-temp"></h4>
+                        <h4 class="forecast-wind"></h4>
+                        <h4 class="forecast-humidity"></h4>
+                    </div>
+                </div> -->
+                </section>
+            </div>
         </div>
 
     </main>
 
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

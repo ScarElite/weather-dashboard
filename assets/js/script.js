@@ -2,7 +2,7 @@ var formInput = document.querySelector("#user-form");
 var cityInput = document.querySelector("#city-input");
 var cityHistoryEl = document.querySelector(".city-search-history");
 var cityWeatherEl = document.querySelector(".city-weather");
-var cityForecastEl = document.querySelector(".city-forecast");
+var cityForecastEl = document.querySelector(".forecast-container");
 const apiKey = "2ce974ae126aef3e2b73d8d71731bb9d";
 const apiKey_UV = "642f411ae74d41aab68e27e199707737";
 var cityContainerEl = document.querySelector(".city-container");
@@ -12,6 +12,10 @@ var formSubmitHandler = function (event) {
 
     // get value from input
     var city = cityInput.value.trim();
+    if (city === "") {
+        alert("You must enter a city name!");
+        return;
+    };
     console.log(city);
     cityInput.value = "";
     
@@ -60,7 +64,7 @@ var getCityWeather = function (cityName) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    displayCityWeather(data, coordsData);
+                    displayCurrentCityWeather(data);
                 });
             } else {
                 alert("Error: Coordinates Not Found");
@@ -72,12 +76,12 @@ var getCityWeather = function (cityName) {
     };
 };
 
-var displayCityWeather = function (data, coordsData) {
+var displayCurrentCityWeather = function (data) {
     console.log(data);
     cityContainerEl.classList = ("city-container");
 
     var cityNameDate = document.querySelector(".city-date");
-    cityNameDate.textContent = data.name + " (Today's date)";
+    cityNameDate.textContent = data.name + " - (" + moment().format("L") + ")";
 
     var currentTemp = document.querySelector(".temp");
     currentTemp.textContent = "Temp: " + data.main.temp + "°F";
@@ -96,7 +100,10 @@ var displayCityWeather = function (data, coordsData) {
             response.json().then(function (data_UV) {
                 console.log(data_UV);
                 var currentUV_Index = document.querySelector(".uv-index");
-                currentUV_Index.textContent = "UV Index: " + data_UV.data[0].uv;
+                var currentUV_IndexValue = document.querySelector(".uv-index-value");
+                currentUV_Index.textContent = "UV Index: ";
+                currentUV_IndexValue.textContent = data_UV.data[0].uv;
+                getForecastWeather(data);
             });
         } else {
             alert("Error: Data Not Found");
@@ -105,6 +112,63 @@ var displayCityWeather = function (data, coordsData) {
     .catch(function (error) {
         alert("Unable to connect to the Weatherbit api");
     });
+};
+
+var getForecastWeather = function (data) {
+    console.log("!!!!!!!!!!!", data);
+    var apiUrl = "https://api.openweathermap.org/data/3.0/onecall?units=imperial&lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&exclude=current,minutely,hourly,alerts&appid=" + apiKey;
+
+        fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    console.log(data);
+                    displayForecastWeather(data);
+                });
+            } else {
+                alert("Error: Coordinates Not Found");
+            }
+        })
+        .catch(function (error) {
+            alert("Unable to connect to the Weather api");
+        });
+};
+
+var displayForecastWeather = function (data) {
+    cityForecastEl.classList = ("city-forecast");
+    
+    var forecastTitle = document.querySelector(".forecast-title");
+    forecastTitle.classList = (".forecast-title");
+    cityWeatherEl.appendChild(forecastTitle);
+
+    for (var i = 0; i < 5; i++) {
+        console.log(data.daily[i].temp.max, data.daily[i].wind_speed, data.daily[i].humidity);
+
+        var forecastedDay = document.createElement("div");
+        forecastedDay.classList = ("card forecasted-day");
+        forecastedDay.id = ("card");
+        cityForecastEl.appendChild(forecastedDay);
+
+        var forecastDayDate = document.createElement("h4");
+        forecastDayDate.classList = ("forecast-day-date card-header");
+        forecastDayDate.textContent = "09/05/2022";
+        forecastedDay.appendChild(forecastDayDate)
+
+        var forecastDayTemp = document.createElement("h5");
+        forecastDayTemp.classList = ("forecast-day card-body");
+        forecastDayTemp.textContent = "Temp: " + data.daily[i].temp.max + "°F";
+        forecastedDay.appendChild(forecastDayTemp);
+
+        var forecastDayWind = document.createElement("h5");
+        forecastDayWind.classList = ("forecast-day card-body");
+        forecastDayWind.textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
+        forecastedDay.appendChild(forecastDayWind);
+
+        var forecastDayHumidity = document.createElement("h5");
+        forecastDayHumidity.classList = ("forecast-day card-body");
+        forecastDayHumidity.textContent = "Humidity: " + data.daily[i].humidity + "%";
+        forecastedDay.appendChild(forecastDayHumidity);
+    }
 };
 
 formInput.addEventListener("submit", formSubmitHandler);
