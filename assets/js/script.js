@@ -1,3 +1,5 @@
+var historyIdCounter = 0;
+
 var formInput = document.querySelector("#user-form");
 var cityInput = document.querySelector("#city-input");
 var cityHistoryEl = document.querySelector(".city-search-history");
@@ -6,6 +8,9 @@ var cityForecastEl = document.querySelector(".forecast-container");
 const apiKey = "2ce974ae126aef3e2b73d8d71731bb9d";
 const apiKey_UV = "642f411ae74d41aab68e27e199707737";
 var cityContainerEl = document.querySelector(".city-container");
+
+// create array to hold the history
+var citySearchHistory = [];
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
@@ -25,11 +30,31 @@ var formSubmitHandler = function (event) {
 var displayCityButton = function (cityName) {
     var cityHistory = document.createElement("button");
     cityHistory.className = "city-search";
-    // cityHistoryEl.setAttribute("href", cityName);
+    // cityHistory.setAttribute = ("city", cityName);
     cityHistory.textContent = cityName;
     cityHistoryEl.appendChild(cityHistory);
-    localStorage.setItem("city", cityName);
+
+    cityName.id = historyIdCounter;
+    citySearchHistory.push(cityName);
+    saveCityHistory();
+
+    historyIdCounter++;
+
     getCityWeatherCoords(cityName);
+};
+
+var displayCityButtonHistory = function (cityName) {
+    var cityHistory = document.createElement("button");
+    cityHistory.className = "city-search";
+    // cityHistory.setAttribute = ("city", cityName);
+    cityHistory.textContent = cityName;
+    cityHistoryEl.appendChild(cityHistory);
+
+    cityName.id = historyIdCounter;
+    citySearchHistory.push(cityName);
+    saveCityHistory();
+
+    historyIdCounter++;
 };
 
 var getCityWeatherCoords = function (cityName) {
@@ -261,4 +286,33 @@ var displayForecastWeather = function (data) {
     }
 };
 
+var clearContent = function () {
+
+};
+
+var saveCityHistory = function () {
+    localStorage.setItem("city", JSON.stringify(citySearchHistory));
+};
+
+var loadTasks = function () {
+    var savedCities = localStorage.getItem("city");
+    // if there are no tasks, set tasks to an empty array and return out of the function
+    if (!savedCities) {
+        return false;
+    }
+
+    // parse into array of objects
+    savedCities = JSON.parse(savedCities);
+
+    // loop through savedCities array
+    for (var i = 0; i < savedCities.length; i ++) {
+        // pass each task object into the 'displayCityButton()' function
+        displayCityButtonHistory(savedCities[i]);
+    }
+
+    clearContent();
+};
+
 formInput.addEventListener("submit", formSubmitHandler);
+
+loadTasks();
