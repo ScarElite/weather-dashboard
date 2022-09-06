@@ -132,8 +132,28 @@ hr {
     margin-bottom: 0;
 }
 
-.uv-index-value {
+.uv-index-value, .uv-index-value-low {
     background-color: green;
+    margin-left: 5px;
+}
+
+.uv-index-value-moderate {
+    background-color: yellow;
+    margin-left: 5px;
+}
+
+.uv-index-value-high {
+    background-color: orange;
+    margin-left: 5px;
+}
+
+.uv-index-value-very-high {
+    background-color: red;
+    margin-left: 5px;
+}
+
+.uv-index-value-extreme {
+    background-color: violet;
     margin-left: 5px;
 }
 
@@ -147,11 +167,16 @@ hr {
 #forecast-title {
     border: none;
     width: 100%;
+    margin-top: 20px;
+    font-weight: bolder;
 }
 
 .forecasted-day {
     display: flex;
     border: solid 2px black;
+    background-color: rgb(54, 92, 133);
+    color: white;
+    padding-bottom: 10px;
 }
 
 #card {
@@ -160,16 +185,23 @@ hr {
     justify-content: space-around;
 }
 
+
 .forecast-day-date {
     font-size: 22px;
     font-weight: bold;
     padding-left: 0;
     margin-left: 8px;
+    background-color: rgb(54, 92, 133);
+    color: white;
 }
 
 .forecast-day {
     font-size: 18px;
-    padding: 8px 8px 0px 8px;
+    padding: 8px 0px 0px 8px;
+}
+
+.icon {
+    font-size: 28px;
 }
 
 .hidden {

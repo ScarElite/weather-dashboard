@@ -29,10 +29,10 @@ var displayCityButton = function (cityName) {
     cityHistory.textContent = cityName;
     cityHistoryEl.appendChild(cityHistory);
     localStorage.setItem("city", cityName);
-    getCityWeather(cityName);
+    getCityWeatherCoords(cityName);
 };
 
-var getCityWeather = function (cityName) {
+var getCityWeatherCoords = function (cityName) {
     // get city coords by using the city name as the input
     var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=" + apiKey;
 
@@ -55,8 +55,6 @@ var getCityWeather = function (cityName) {
         console.log(cityName, data);
         console.log(data[0]);
         console.log(data[0].lat, data[0].lon);
-        var coordsData = data[0].state;
-        console.log("Success!!!!", coordsData);
         
         var apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=" + data[0].lat + "&lon=" + data[0].lon + "&appid=" + apiKey;
 
@@ -81,7 +79,43 @@ var displayCurrentCityWeather = function (data) {
     cityContainerEl.classList = ("city-container");
 
     var cityNameDate = document.querySelector(".city-date");
-    cityNameDate.textContent = data.name + " - (" + moment().format("L") + ")";
+    cityNameDate.textContent = data.name + " - (" + moment().format("L") + ") ";
+
+    if (data.weather[0].main === "Clouds") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-cloud");
+        cityNameDate.append(cityNameDateIcon);
+    } else if (data.weather[0].main === "Mist") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-cloud-rain");
+        cityNameDate.append(cityNameDateIcon); 
+    } else if (data.weather[0].main === "Clear") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-sun");
+        cityNameDate.append(cityNameDateIcon);
+    } else if (data.weather[0].main === "Thunderstorm") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-cloud-bolt");
+        cityNameDate.append(cityNameDateIcon);
+    } else if (data.weather[0].main === "Rain" && data.weather[0].description === "heavy intensity rain") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-cloud-showers-heavy");
+        cityNameDate.append(cityNameDateIcon);
+    } else if (data.weather[0].main === "Rain") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-cloud-rain");
+        cityNameDate.append(cityNameDateIcon);
+    } else if (data.weather[0].main === "Snow") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-snowflake");
+        cityNameDate.append(cityNameDateIcon);
+    } else if (data.weather[0].main === "Smoke") {
+        var cityNameDateIcon = document.createElement("i");
+        cityNameDateIcon.classList = ("fa-solid fa-smog");
+        cityNameDate.append(cityNameDateIcon);
+    } else {
+        cityNameDate.textContent = data.name + " - (" + moment().format("L") + ") ";
+    }
 
     var currentTemp = document.querySelector(".temp");
     currentTemp.textContent = "Temp: " + data.main.temp + "°F";
@@ -103,6 +137,21 @@ var displayCurrentCityWeather = function (data) {
                 var currentUV_IndexValue = document.querySelector(".uv-index-value");
                 currentUV_Index.textContent = "UV Index: ";
                 currentUV_IndexValue.textContent = data_UV.data[0].uv;
+
+                if (data_UV.data[0].uv < 3) {
+                    currentUV_IndexValue.classList = "uv-index-value uv-index-value-low";
+                } else if (data_UV.data[0].uv >= 3 && data_UV.data[0].uv < 6) {
+                    currentUV_IndexValue.classList = "uv-index-value uv-index-value-moderate";
+                } else if (data_UV.data[0].uv >= 6 && data_UV.data[0].uv < 8) {
+                    currentUV_IndexValue.classList = "uv-index-value uv-index-value-high";
+                } else if (data_UV.data[0].uv >= 8 && data_UV.data[0].uv < 11) {
+                    currentUV_IndexValue.classList = "uv-index-value uv-index-value-very-high";
+                } else if (data_UV.data[0].uv >= 11) {
+                    currentUV_IndexValue.classList = "uv-index-value uv-index-value-extreme";
+                } else {
+                    currentUV_IndexValue.textContent = "Unknown";
+                }
+
                 getForecastWeather(data);
             });
         } else {
@@ -135,14 +184,18 @@ var getForecastWeather = function (data) {
 };
 
 var displayForecastWeather = function (data) {
+    // Clears any content in this container from previous searches so that new forecast cards can appear with the correct information
+    cityForecastEl.innerHTML = "";
+
     cityForecastEl.classList = ("city-forecast");
     
     var forecastTitle = document.querySelector(".forecast-title");
-    forecastTitle.classList = (".forecast-title");
+    forecastTitle.classList = ("forecast-title");
     cityWeatherEl.appendChild(forecastTitle);
 
     for (var i = 0; i < 5; i++) {
         console.log(data.daily[i].temp.max, data.daily[i].wind_speed, data.daily[i].humidity);
+        console.log(data);
 
         var forecastedDay = document.createElement("div");
         forecastedDay.classList = ("card forecasted-day");
@@ -153,6 +206,43 @@ var displayForecastWeather = function (data) {
         forecastDayDate.classList = ("forecast-day-date card-header");
         forecastDayDate.textContent = "09/05/2022";
         forecastedDay.appendChild(forecastDayDate)
+
+        var forecastDayIcon = document.createElement("h5");
+        forecastDayIcon.classList = ("forecast-day card-body");
+        forecastDayIcon.textContent = "";
+        forecastDayDate.appendChild(forecastDayIcon);
+
+        if (data.daily[i].weather[0].main === "Clouds") {
+            var cityNameDateIcon = document.createElement("i");
+            cityNameDateIcon.classList = ("fa-solid fa-cloud icon");
+            forecastDayIcon.append(cityNameDateIcon);
+        } else if (data.daily[i].weather[0].main === "Mist") {
+            var cityNameDateIcon = document.createElement("i");
+            cityNameDateIcon.classList = ("fa-solid fa-cloud-rain icon");
+            forecastDayIcon.append(cityNameDateIcon); 
+        } else if (data.daily[i].weather[0].main === "Clear") {
+            var cityNameDateIcon = document.createElement("i");
+            cityNameDateIcon.classList = ("fa-solid fa-sun icon");
+            forecastDayIcon.append(cityNameDateIcon);
+        } else if (data.daily[i].weather[0].main === "Thunderstorm") {
+            var cityNameDateIcon = document.createElement("i");
+            cityNameDateIcon.classList = ("fa-solid fa-cloud-bolt icon");
+            forecastDayIcon.append(cityNameDateIcon);
+        } else if (data.daily[i].weather[0].main === "Rain" && data.daily[i].weather[0].description === "heavy intensity rain") {
+            var cityNameDateIcon = document.createElement("i");
+            cityNameDateIcon.classList = ("fa-solid fa-cloud-showers-heavy icon");
+            forecastDayIcon.append(cityNameDateIcon);
+        } else if (data.daily[i].weather[0].main === "Rain") {
+            var cityNameDateIcon = document.createElement("i");
+            cityNameDateIcon.classList = ("fa-solid fa-cloud-rain icon");
+            forecastDayIcon.append(cityNameDateIcon);
+        } else if (data.daily[i].weather[0].main === "Snow") {
+            var cityNameDateIcon = document.createElement("i");
+            cityNameDateIcon.classList = ("fa-solid fa-snowflake icon");
+            forecastDayIcon.append(cityNameDateIcon);
+        } else {
+            forecastDayIcon.textContent = "???";
+        }
 
         var forecastDayTemp = document.createElement("h5");
         forecastDayTemp.classList = ("forecast-day card-body");
