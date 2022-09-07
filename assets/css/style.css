@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 
+/* Header*/
 
 header {
     margin-bottom: 10px;
@@ -14,6 +15,8 @@ header {
     text-align: center;
 }
 
+/* Main */
+
 main {
     display: flex;
 }
@@ -22,12 +25,15 @@ section {
     border: 2px solid black;
 }
 
+/* Left Column */
+
 .left-column {
     display: flex;
     flex-direction: column;
     width: 20%;
 }
 
+/* The City Search form that is styled as a card */
 .card {
     margin-left: 20px;
     border: none;
@@ -83,6 +89,7 @@ hr {
     margin-top: 2px;
 }
 
+/* Left Column that displays the city search history */
 .city-search {
     display: flex;
     flex-direction: column;
@@ -104,7 +111,7 @@ hr {
     background-color: white;
 }
 
-/* right column */
+/* Right column */
 
 .right-column {
     display: flex;
@@ -132,30 +139,37 @@ hr {
     margin-bottom: 0;
 }
 
+/* Styles the background of the uv index value to be green if the uv index is low */
 .uv-index-value, .uv-index-value-low {
     background-color: green;
     margin-left: 5px;
 }
 
+/* Styles the background of the uv index value to be yellow if the uv index is moderate */
 .uv-index-value-moderate {
     background-color: yellow;
     margin-left: 5px;
 }
 
+/* Styles the background of the uv index value to be orange if the uv index is high */
 .uv-index-value-high {
     background-color: orange;
     margin-left: 5px;
 }
 
+/* Styles the background of the uv index value to be red if the uv index is very high */
 .uv-index-value-very-high {
     background-color: red;
     margin-left: 5px;
 }
 
+/* Styles the background of the uv index value to be violet if the uv index is extreme */
 .uv-index-value-extreme {
     background-color: violet;
     margin-left: 5px;
 }
+
+/* The bottom container of the right column that has the city's forecasted weather */
 
 .city-forecast {
     display: flex;
@@ -171,6 +185,7 @@ hr {
     font-weight: bolder;
 }
 
+/* Styles the card of each forecasted day */
 .forecasted-day {
     display: flex;
     border: solid 2px black;
@@ -204,6 +219,7 @@ hr {
     font-size: 28px;
 }
 
+/* Makes the content hidden */
 .hidden {
     visibility: hidden;
 }

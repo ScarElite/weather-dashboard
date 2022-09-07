@@ -10,14 +10,17 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <h1 class="header">Weather Dashboard</h1>
     </header>
 
     <main>
 
+        <!-- Left Column of the website -->
         <div class="left-column">
 
+            <!-- The form input for the user to input a city name and then search -->
             <div class="search-form card">
                 <h1 class="card-header">Search for a City:</h1>
                 <form id="user-form" class="user-form card-body">
@@ -28,11 +31,14 @@
 
             <hr/>
 
+            <!-- The container on the left side below the City Search that will be used to hold the user's search history -->
             <div class="city-search-history"></div>
 
         </div>
 
+        <!-- Right Column of the website -->
         <div class="right-column">
+            <!-- The container on the top of the right column that holds a city's current weather information -->
             <div class="city-weather">
                 <section class="city-container hidden">
                     <h1 class="city-date"></h1>
@@ -45,10 +51,12 @@
                     </div>
                 </section>
             </div>
+            <!-- The container on the bottom of the right column that hold's a city's 5 day weather forecast -->
             <div class="city-forecast d-flex">
                 <section id="forecast-title" class="forecast-title hidden">
                     <h2>5-Day Forecast:</h2>
                 </section>
+                <!-- This section holds the cards of weather information of each forecasted day -->
                 <section class="forecast-container hidden"></section>
             </div>
         </div>
