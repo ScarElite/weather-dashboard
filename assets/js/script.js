@@ -71,7 +71,7 @@ var displayCityButtonHistory = function (cityName) {
 var getCityWeatherCoords = function (cityName) {
   // get city coords by using the city name as the input
   var apiUrl =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     cityName +
     "&limit=5&appid=" +
     apiKey;
